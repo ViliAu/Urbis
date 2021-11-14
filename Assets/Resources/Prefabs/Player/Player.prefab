@@ -285,16 +285,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e5513fbd1cb85419d81be3f21c5c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  sprintSpeed: 30
+  speed: 6
+  sprintSpeed: 15
   crouchMovementSpeed: 13
-  acceleration: 50
+  acceleration: 22
   deceleration: 10
   crouchSpeed: 5
   airAcceleration: 1
-  gravity: 5
+  gravity: 52
   maximumGravity: 120
-  jumpHeight: 15
+  jumpHeight: 13
   ladderWidth: 0.1
   climbSpeed: 1
   ladderMaxAngle: 10
