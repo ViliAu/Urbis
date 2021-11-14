@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 2463072093310667526}
   - component: {fileID: 2214883167601719393}
   - component: {fileID: 2463072093310667527}
+  - component: {fileID: 1198155023084618367}
   - component: {fileID: -2596822072398487880}
   - component: {fileID: -1333553136553221641}
   - component: {fileID: 2463072093310667530}
@@ -304,6 +305,24 @@ MonoBehaviour:
     m_Bits: 2147483647
   velocity: {x: 0, y: 0, z: 0}
   controller: {fileID: 2463072093310667530}
+--- !u!114 &1198155023084618367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2463072093310667528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95bf6acd0cb14e040b0b18f631012552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  range: 1.5
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
 --- !u!114 &-2596822072398487880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,8 +367,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  componentsToDisable: []
-  gameObjectsToDisable: []
+  componentsToDisable:
+  - {fileID: -2596822072398487880}
+  - {fileID: 1198155023084618367}
+  - {fileID: 2463072093310667527}
+  - {fileID: 2214883167601719393}
+  gameObjectsToDisable:
+  - {fileID: 2463072093908019644}
+  - {fileID: 777740244}
   selfObjectToDisable: []
 --- !u!143 &2463072093310667530
 CharacterController:
