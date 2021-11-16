@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 2463072093310667527}
   - component: {fileID: 1198155023084618367}
   - component: {fileID: -2596822072398487880}
+  - component: {fileID: -2515757168230821850}
   - component: {fileID: -1333553136553221641}
   - component: {fileID: 2463072093310667530}
   - component: {fileID: 2463072093310667525}
@@ -319,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  range: 1.5
+  range: 2
   hitMask:
     serializedVersion: 2
     m_Bits: 2147483647
@@ -353,6 +354,19 @@ MonoBehaviour:
   zoom: 0
   sprinting: 0
   magnet: 0
+--- !u!114 &-2515757168230821850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2463072093310667528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85462cc1a69b84541ba5929fa9c7f8a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList: []
 --- !u!114 &-1333553136553221641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +386,7 @@ MonoBehaviour:
   - {fileID: 1198155023084618367}
   - {fileID: 2463072093310667527}
   - {fileID: 2214883167601719393}
+  - {fileID: -2515757168230821850}
   gameObjectsToDisable:
   - {fileID: 2463072093908019644}
   - {fileID: 777740244}

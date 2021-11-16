@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
 using UnityEngine;
+using Mirror;
 
-public class Entity : MonoBehaviour {
+public class Entity : NetworkBehaviour {
 
     TextInfo t = new CultureInfo("en-US", false).TextInfo;
 
