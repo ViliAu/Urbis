@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85462cc1a69b84541ba5929fa9c7f8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxItemCount: 10
   itemList: []
 --- !u!114 &-1333553136553221641
 MonoBehaviour:
@@ -511,7 +512,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.15
   far clip plane: 1000
   field of view: 90
   orthographic: 0
@@ -561,8 +562,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
