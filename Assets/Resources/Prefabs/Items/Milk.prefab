@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1948111262427552298}
   m_RootOrder: 0
@@ -74,7 +75,8 @@ Transform:
   m_GameObject: {fileID: 1948111262427552297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.047, y: 0.224, z: 0}
-  m_LocalScale: {x: 1.5409, y: 1.5409, z: 1.5409}
+  m_LocalScale: {x: 0.5972066, y: 0.5972066, z: 0.5972066}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1948111261955199574}
   - {fileID: 1948111263154942185}
@@ -95,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  entityName: bottle_1
+  entityName: milk_1
 --- !u!65 &1948111262427552301
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -197,6 +199,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5955211321957660129}
   m_Father: {fileID: 1948111262427552298}

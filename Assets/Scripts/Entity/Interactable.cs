@@ -12,9 +12,6 @@ public class Interactable : Entity {
 
     [ClientRpc]
     protected virtual void RcpInteractionFinish(NetworkIdentity client) {
-        if (!client.isLocalPlayer) {
-            return;
-        }
         
     } 
 }

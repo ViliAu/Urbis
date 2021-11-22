@@ -34,8 +34,8 @@ public class PlayerInteraction : NetworkBehaviour {
     }
 
     [Command]
-    private void CmdInteractionServer(NetworkIdentity client, NetworkIdentity netID) {
-        Interactable intera = netID.GetComponent<Interactable>();
+    private void CmdInteractionServer(NetworkIdentity client, NetworkIdentity interactedObject) {
+        Interactable intera = interactedObject.GetComponent<Interactable>();
         intera.OnServerInteract(client);
     }
 
