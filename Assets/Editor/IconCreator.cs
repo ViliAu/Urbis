@@ -10,9 +10,9 @@ using System.Collections.Generic;
 public class IconCreator : EditorWindow {
 
     // Settings
-    const int passAmount = 3;
+    const int passAmount = 2;
     const bool fading = true;
-    static Color outlineColor = new Color(0, 1, 0, 1);
+    static Color outlineColor = new Color(1, 1, 1, 1);
 
     [MenuItem("Urbis/Generate Icons")]
     static void StartCreating() {
@@ -31,7 +31,7 @@ public class IconCreator : EditorWindow {
                 continue;
             }
 
-            tex = ClipPixels(tex);
+            tex = ProcessTexture(tex);
 
             // Encode icon to png
             byte[] decodedPhoto = tex.EncodeToPNG();
@@ -76,32 +76,88 @@ public class IconCreator : EditorWindow {
             tex = AssetPreview.GetAssetPreview(obj);
             Thread.Sleep(1);
         }
-        return tex;
+        Texture2D newTex = new Texture2D(tex.width, tex.height);
+        newTex.SetPixels(tex.GetPixels());
+        return newTex;
     }
 
-    static Texture2D ClipPixels(Texture2D tex) {
+    static Texture2D ProcessTexture(Texture2D tex) {
         Color[] pixels = tex.GetPixels();
-        Color clipColor = new Color(0, 0, 0, 1);
-        for (int i = 0; i < pixels.Length; i++) {
-            if (pixels[i].a == 1 ) {
-                clipColor = pixels[i];
-                break;
-            }
-        }
-        // Delete pixels that are similiar to clipColor
-        for (int i = 0; i < pixels.Length; i++) {
-            if (pixels[i] == clipColor) {
-                pixels[i].a = 0;
-            }
-        }
+        // Remove bg
+        pixels = ApplyTransparency(pixels);
         // Draw outline
         pixels = DrawOutline(pixels);
         tex.SetPixels(pixels);
         return tex;
     }
 
+    static Color[] ApplyTransparency(Color[] pixels) {
+        int texLength = pixels.Length;
+        int width = (int)Mathf.Sqrt(texLength);
+        // Get bg color
+        Color clipColor = new Color(0, 0, 0, 1);
+        for (int i = 0; i < texLength; i++) {
+            if (pixels[i].a == 1 ) {
+                clipColor = pixels[i];
+                break;
+            }
+        }
+        // Remove bg based on passamount
+        List<int> indexList = new List<int>();
+        for (int i = 0; i < texLength; i++) {
+            // Clippable pixel found
+            if (pixels[i] == clipColor) {
+                int score = 0;
+                if (i > width) { // EDGE CHECK
+                    if (pixels[i - width] == clipColor) {
+                        score++;
+                    }
+                }
+                else {
+                    score++;
+                }
+
+                // DOWN
+                if (i < texLength-width) { // EDGE CHECK
+                    if (pixels[i + width] == clipColor) {
+                        score++;
+                    }
+                }
+                else {
+                    score++;
+                }
+
+                // RIGHT
+                if (i % width != 127) { // EDGE CHECK
+                    if (pixels[i + 1] == clipColor) {
+                        score++;
+                    }
+                }
+                else {
+                    score++;
+                }
+
+                // LEFT
+                if (i % width != 0) { // EDGE CHECK
+                    if (pixels[i - 1] == clipColor) {
+                        score++;
+                    }
+                }
+                else {
+                    score++;
+                }
+                if (score > 2) {
+                    indexList.Add(i);
+                }
+            }
+        }
+        foreach (int i in indexList) {
+            pixels[i].a = 0;
+        }
+        return pixels;
+    }
+
     static Color[] DrawOutline(Color[] pixels) {
-        Debug.Log("WTF");
         int texLength = pixels.Length;
         int width = (int)Mathf.Sqrt(texLength);
         Color olColor = outlineColor;
@@ -146,40 +202,5 @@ public class IconCreator : EditorWindow {
             }
         }
         return pixels;
-    }
-
-    static float ColorPerimeter(Color[] pixels, Color alphaColor, int i, int width) {
-        int texLength = pixels.Length;
-        int texSide = 128;
-        // Avoid ArgumentOutOfRangeExeption
-        if (i + width > texLength-1 || i - width < 0 || i + texSide * width > texLength-1 || i - texSide * width < 0 ) {
-            return 0;
-        }
-        // Check front
-        for (int j = 0; j < width; j++) {
-            if (pixels[i+j] != alphaColor && pixels[i+j].a == 1) {
-                return 1f/* - (float)j / (float)width*/;
-            }
-        }
-        
-        // Check back
-        for (int j = 0; j < width; j++) {
-            if (pixels[i-j] != alphaColor && pixels[i-j].a == 1) {
-                return 1f/* - (float)j / (float)width*/;
-            }
-        }
-        // Check up
-        for (int j = 0; j < width; j++) {
-            if (pixels[i+j*texSide] != alphaColor && pixels[i+j*texSide].a == 1) {
-                return 1f/* - (float)j / (float)width*/;
-            }
-        } 
-        // Check down
-        for (int j = 0; j < width; j++) {
-            if (pixels[i-j*texSide] != alphaColor && pixels[i-j*texSide].a == 1) {
-                return 1f/* - (float)j / (float)width*/;
-            }
-        }
-        return 0;
     }
 }

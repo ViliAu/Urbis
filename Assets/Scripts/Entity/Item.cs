@@ -14,5 +14,5 @@ public class Item : Interactable {
         PlayerInventory inv = client.transform.GetComponent<PlayerInventory>();
         inv.AddItem(this);
     }
-
+    
 }
