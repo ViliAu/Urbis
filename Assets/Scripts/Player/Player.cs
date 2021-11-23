@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mirror;
 
 public class Player : MonoBehaviour {
@@ -52,6 +53,21 @@ public class Player : MonoBehaviour {
                 netid = transform.GetComponent<NetworkIdentity>();
             }
             return netid;
+        }
+    }
+
+    void Start() {
+        MoveToSpawnPosition();
+    }
+
+    void MoveToSpawnPosition() {
+        // TODO : Ehkä tää kuulus jonnekkii muualle mut ei nyt täl hetjkel kummiskaa
+        PlayerSpawnPoint[] spawns = Resources.LoadAll<PlayerSpawnPoint>("ScriptableObjects/Spawn Points");
+        string sceneName = SceneManager.GetActiveScene().name;
+        foreach (PlayerSpawnPoint spawn in spawns) {
+            if (spawn.sceneName == sceneName) {
+                transform.position = spawn.playerSpawnPos; 
+            }
         }
     }
 }
