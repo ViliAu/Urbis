@@ -11,8 +11,8 @@ public class IconCreator : EditorWindow {
 
     // Settings
     const int passAmount = 2;
-    const bool fading = true;
-    static Color outlineColor = new Color(1, 1, 1, 1);
+    const bool fading = false;
+    static Color outlineColor = new Color32(0xff, 0xff, 0xff, 0xff);
 
     [MenuItem("Urbis/Generate Icons")]
     static void StartCreating() {
