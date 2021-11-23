@@ -109,7 +109,10 @@ public class PathEditor : Editor {
                 if (poi.bezier) {
                     if (creator.drawAbsolutePath)
                         Handles.DrawBezier(p.position, poi.position, p.controlPoint2, poi.controlPoint1, creator.absolutePathColor, null, 2);
-                    p.bezierPoints.Add(Handles.MakeBezierPoints(p.position, poi.position, p.controlPoint2, poi.controlPoint1, creator.segmentsPerLine));
+                    if (creator.unityJuttu)
+                        p.bezierPoints.Add(Handles.MakeBezierPoints(p.position, poi.position, p.controlPoint2, poi.controlPoint1, creator.segmentsPerLine));
+                    else
+                        p.bezierPoints.Add(CalculateEvenlySpacedPoints(p, poi, creator.spacing, creator.segmentsPerLine));
                 }
                 else {
                     Handles.color = creator.absolutePathColor;
@@ -137,5 +140,38 @@ public class PathEditor : Editor {
         }
         path = creator.path;
         RefreshPathPoints();
+    }
+
+    // Redo this calc
+    public Vector3[] CalculateEvenlySpacedPoints(Path.Point p1, Path.Point p2, float spacing, float resolution = 10) {
+        List<Vector3> evenlySpacedPoints = new List<Vector3>();
+        evenlySpacedPoints.Add(p1.position);
+        Vector2 previousPoint = p1.position;
+        float dstSinceLastEvenPoint = 0;
+
+        float controlNetLength = Vector2.Distance(p1.position, p1.controlPoint2)
+            + Vector2.Distance(p1.controlPoint2, p2.controlPoint1) + Vector2.Distance(p2.controlPoint1, p2.position);
+        float estimatedCurveLength = Vector2.Distance(p1.position, p2.position) + controlNetLength / 2f;
+        int divisions = Mathf.CeilToInt(estimatedCurveLength * resolution);
+        float t = 0;
+        while (t <= 1) {
+            t += 1f/divisions;
+            Vector2 pointOnCurve = Bezier.EvaluateCubic(p1.position, p1.controlPoint2, p2.controlPoint1, p2.position, t);
+            dstSinceLastEvenPoint += Vector2.Distance(previousPoint, pointOnCurve);
+
+            while (dstSinceLastEvenPoint >= spacing)
+            {
+                float overshootDst = dstSinceLastEvenPoint - spacing;
+                Vector2 newEvenlySpacedPoint = pointOnCurve + (previousPoint - pointOnCurve).normalized * overshootDst;
+                evenlySpacedPoints.Add(newEvenlySpacedPoint);
+                dstSinceLastEvenPoint = overshootDst;
+                previousPoint = newEvenlySpacedPoint;
+            }
+
+            previousPoint = pointOnCurve;
+        }
+
+
+        return evenlySpacedPoints.ToArray();
     }
 }

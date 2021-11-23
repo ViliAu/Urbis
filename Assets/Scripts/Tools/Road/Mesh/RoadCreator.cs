@@ -9,14 +9,82 @@ public class RoadCreator : MonoBehaviour {
 
     [Range(.05f, 1.5f)]
     public float spacing = 1;
-    public float roadWidth = 1;
+    public float roadWidth = 0.5f;
     public bool autoUpdate;
     public float tiling = 1;
 
+    List<Vector3> vList = new List<Vector3>();
 
     public void UpdateRoad() {
         Path path = GetComponent<PathCreator>().path;
+        List<Vector3> verts = new List<Vector3>();
+        List<int> tris = new List<int>();
+        List<Path.Point> usedPoints = new List<Path.Point>();
+        CreateRoadMeshData(path.StartPoint, ref usedPoints, ref verts, ref tris);
+        Mesh mesh = new Mesh();
+        mesh.vertices = verts.ToArray();
+        mesh.triangles = tris.ToArray();
 
+        GetComponent<MeshFilter>().mesh = mesh;
+    }
+
+    private void CreateRoadMeshData(Path.Point start, ref List<Path.Point> usedPoints, ref List<Vector3> verts, ref List<int> tris) {
+        // In this case we've come to an end of the path branch
+        if (start == null || usedPoints.Contains(start)) {
+            for (int i = 0; i < 6; i++) {
+                tris.RemoveAt(tris.Count-1);
+            }
+            return;
+        }
+        usedPoints.Add(start);
+        for(int i = 0; i < start.next.Count; i++) {
+            CalculateVerticesByPoint(start.bezierPoints[i], ref verts, ref tris);
+            CreateRoadMeshData(start.next[i], ref usedPoints, ref verts, ref tris);
+        }
+        for (int i = 0; i < 6; i++) {
+            tris.RemoveAt(tris.Count-1);
+        }
+    }
+
+    private void CalculateVerticesByPoint(Vector3[] points, ref List<Vector3> vertices, ref List<int> tris) {
+        for(int i = 0; i < points.Length; i++) {
+            Vector3 forward = Vector2.zero;
+            if (i < points.Length - 1) {
+                forward += points[(i + 1) % points.Length] - points[i];
+            }
+            if (i > 0) {
+                forward += points[i] - points[(i - 1 + points.Length)%points.Length];
+            }
+
+            forward.Normalize();
+            Vector3 left = new Vector3(-forward.y, forward.x);
+
+            // Left vertex
+            vertices.Add(points[i] + left * roadWidth * .5f);
+
+            // Right vertex
+            vertices.Add(points[i] - left * roadWidth * .5f);
+
+            if (i < points.Length - 1) {
+                tris.Add(vertices.Count-2);
+                tris.Add(vertices.Count-2 + 2);
+                tris.Add(vertices.Count-2 + 1);
+
+                tris.Add(vertices.Count-2 + 1);
+                tris.Add(vertices.Count-2 + 2);
+                tris.Add(vertices.Count-2 + 3);
+            }
+            
+        
+        // Connect to next piece
+        tris.Add(vertices.Count-2);
+        tris.Add(vertices.Count-2 + 2);
+        tris.Add(vertices.Count-2 + 1);
+
+        tris.Add(vertices.Count-2 + 1);
+        tris.Add(vertices.Count-2 + 2);
+        tris.Add(vertices.Count-2 + 3);
+        }
     }
 
     /*

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class PathCreator : MonoBehaviour {
 
-    [HideInInspector] public Path path;
+    [HideInInspector] public Path path = null;
 
-    [Range(3, 30)]public int segmentsPerLine = 10; 
+    [Tooltip("How accurate the estimation will be")]
+    [Range(3, 30)]public int segmentsPerLine = 10;
+
+    [Tooltip("How far apart the road vertices will be")]
+    [Range(0.05f, 1f)]public float spacing = 0.1f; 
 
     public bool drawAbsolutePath = true;
     public bool drawEvaluationPath = false;
     public bool drawHandles = true;
+    public bool unityJuttu = false;
     public Color absolutePathColor = Color.green;
     public Color evaluationPathColor = Color.white;
     public Color bezierHandleColor = Color.red;

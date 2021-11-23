@@ -10,25 +10,13 @@ public class Path {
     public Point ActivePoint {get {return activePoint;} set {activePoint = value;}}
 
     public Path(Vector2 center) {
-        Point p1 = new Point(null, null, Vector3.left, (Vector3.up+Vector3.left)*0.5f);
+        Point p1 = new Point(null, null, Vector3.left, (Vector3.left+Vector3.up)*0.5f);
         Point p2 = new Point(null, null, Vector3.right, (Vector3.right+Vector3.up)*0.5f);
         p1.next.Add(p2);
         p2.prev.Add(p1);
         startPoint = p1;
         activePoint = p2;
     }
-
-    /*public List<Point> GetAllPoints(Point start) {
-        List<Point> points = new List<Point>();
-        if (start == null || points.Contains(start)) {
-            return points;
-        }
-        points.Add(start);
-        foreach(Point p in start.next) {
-            points.AddRange(GetAllPoints(p));
-        }
-        return points;
-    }*/
 
     public void GetAllPoints(Point start, ref List<Point> points) {
         if (start == null || points.Contains(start)) {
@@ -49,6 +37,18 @@ public class Path {
                     for (int i = 0; i < v.Length-1; i++) {
                         list.Add(v[i]);
                     }
+                }
+            }
+        }
+    }
+
+    public void GetAllCurves(ref List<Vector3[]> list) {
+        List<Point> points = new List<Point>();
+        GetAllPoints(StartPoint, ref points);
+        foreach(Path.Point p in points) {
+            if (p.bezierPoints != null && p.bezierPoints.Count > 0) {
+                foreach (Vector3[] v in p.bezierPoints) {
+                    list.Add(v);
                 }
             }
         }
@@ -139,7 +139,7 @@ public class Path {
     }
 
     public class EvaluationPoint {
-        public Vector3 position;
+        public Vector3 position, left, right;
         public List<EvaluationPoint> next;
         public EvaluationPoint(Vector3 position) {
             this.position = position;
