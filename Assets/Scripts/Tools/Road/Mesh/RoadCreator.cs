@@ -41,8 +41,10 @@ public class RoadCreator : MonoBehaviour {
             CalculateVerticesByPoint(start.bezierPoints[i], ref verts, ref tris);
             CreateRoadMeshData(start.next[i], ref usedPoints, ref verts, ref tris);
         }
-        for (int i = 0; i < 6; i++) {
-            tris.RemoveAt(tris.Count-1);
+        if (tris.Count > 6) {
+            for (int i = 0; i < 6; i++) {
+                tris.RemoveAt(tris.Count-1);
+            }
         }
     }
 

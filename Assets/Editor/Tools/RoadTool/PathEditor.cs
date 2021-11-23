@@ -34,18 +34,6 @@ public class PathEditor : Editor {
             path.AddPoint(mousePos);
             RefreshPathPoints();
         }
-        // Making a node active
-        else if (guiEvent.type == EventType.MouseDown && guiEvent.button == 0/* && guiEvent.control*/) {
-            float minDistance = 0.1f;
-            foreach(Path.Point p in points) {
-                float dst = Vector2.Distance(mousePos, p.position);
-                if (dst < minDistance) {
-                    Undo.RecordObject(creator, "Set Point Active");
-                    path.ActivePoint = p;
-                    break;
-                }
-            }
-        }
         // Deleting points
         else if (guiEvent.type == EventType.MouseDown && guiEvent.button == 0 && guiEvent.alt) {
             float minDistance = 0.1f;
@@ -59,6 +47,19 @@ public class PathEditor : Editor {
                 }
             }
         }
+        // Making a node active
+        else if (guiEvent.type == EventType.MouseDown && guiEvent.button == 0) {
+            float minDistance = 0.1f;
+            foreach(Path.Point p in points) {
+                float dst = Vector2.Distance(mousePos, p.position);
+                if (dst < minDistance) {
+                    Undo.RecordObject(creator, "Set Point Active");
+                    path.ActivePoint = p;
+                    break;
+                }
+            }
+        }
+
         if (guiEvent.type == EventType.KeyDown && guiEvent.keyCode == KeyCode.B) {
             path.ActivePoint.bezier = !path.ActivePoint.bezier;
             RefreshPathPoints();
