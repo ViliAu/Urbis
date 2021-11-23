@@ -67,27 +67,39 @@ public class Path {
         float dstSinceLastEvenPoint = 0;
         foreach (Point p in GetAllPoints(startPoint)) {
             foreach (Point poi in p.next) {
-                float controlNetWeight = Vector2.Distance(p.position, p.controlPoint1) + Vector2.Distance(p.controlPoint1, poi.position)
-                    + Vector2.Distance(poi.position, poi.controlPoint1); 
-                float estimatedCurveLenght = Vector2.Distance(p.position,poi.position) + controlNetWeight * 0.5f;
-                int divisions = Mathf.CeilToInt(estimatedCurveLenght * resolution * 10);
-                float t = 0;
-                while (t <= 1) {
-                    t += 1f/divisions;
-                    Vector2 pointOnCurve = Bezier.EvaluateCubic(p.position, p.controlPoint2, poi.controlPoint1, poi.position, t);
-                    dstSinceLastEvenPoint += Vector2.Distance(previousPoint, pointOnCurve);
-                    while (dstSinceLastEvenPoint >= spacing) {
-                        float overShootDst = dstSinceLastEvenPoint - spacing;
-                        Vector2 newEvenlySpacedPoint = pointOnCurve + (previousPoint-pointOnCurve).normalized * overShootDst;
-                        evenlySpacedPoints.Add(newEvenlySpacedPoint);
-                        dstSinceLastEvenPoint = overShootDst;
-                        previousPoint = newEvenlySpacedPoint;
+                if (p.bezier) {
+                    float controlNetWeight = Vector2.Distance(p.position, p.controlPoint1) + Vector2.Distance(p.controlPoint1, poi.position)
+                        + Vector2.Distance(poi.position, poi.controlPoint1); 
+                    float estimatedCurveLenght = Vector2.Distance(p.position,poi.position) + controlNetWeight * 0.5f;
+                    int divisions = Mathf.CeilToInt(estimatedCurveLenght * resolution * 10);
+                    float t = 0;
+                    while (t <= 1) {
+                        t += 1f/divisions;
+                        Vector2 pointOnCurve = Bezier.EvaluateCubic(p.position, p.controlPoint2, poi.controlPoint1, poi.position, t);
+                        dstSinceLastEvenPoint += Vector2.Distance(previousPoint, pointOnCurve);
+                        while (dstSinceLastEvenPoint >= spacing) {
+                            float overShootDst = dstSinceLastEvenPoint - spacing;
+                            Vector2 newEvenlySpacedPoint = pointOnCurve + (previousPoint-pointOnCurve).normalized * overShootDst;
+                            evenlySpacedPoints.Add(newEvenlySpacedPoint);
+                            dstSinceLastEvenPoint = overShootDst;
+                            previousPoint = newEvenlySpacedPoint;
+                        }
+                        previousPoint = pointOnCurve;
                     }
-                    previousPoint = pointOnCurve;
+                }
+                // TODO: Linear line calc here
+                else {
+
                 }
             }
         }
         return evenlySpacedPoints.ToArray();
+    }
+
+    public EvaluationPoint[] CalculateMeshPointsRecursively(float spacing = 0.1f, float resolution = 1) {
+        List<EvaluationPoint> evaluationPoints = new List<EvaluationPoint>();
+        //evaluationPoints.Add(new EvaluationPoint())
+        return null;
     }
 
     public class Point {
@@ -130,6 +142,19 @@ public class Path {
                     break;
                 }
             }
+        }
+    }
+
+    public class EvaluationPoint {
+        public Vector3 position;
+        public List<EvaluationPoint> next;
+        public EvaluationPoint(Vector3 position, EvaluationPoint next) {
+            this.position = position;
+            this.next.Add(next);
+        }
+        public EvaluationPoint(Vector3 position, List<EvaluationPoint> next) {
+            this.position = position;
+
         }
     }
 }

@@ -33,10 +33,16 @@ public static class DUtil {
         return a > min ? a < max : false;
     }
 
+    /// <summary>
+    /// Converts Vector2 X and Y components to Vector3 X and Y components 
+    /// </summary>
     public static Vector3 Vec2ToVec3XZ(Vector2 vec2) {
         return new Vector3(vec2.x, 0, vec2.y);
     }
 
+    /// <summary>
+    /// Converts Vector3 X and Y components to Vector2 X and Y components 
+    /// </summary>
     public static Vector3 Vec3ToVec2XZ(Vector3 vec3) {
         return new Vector2(vec3.x, vec3.z);
     }

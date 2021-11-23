@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Crouch settings")]
     [SerializeField] private float crouchSpeed = 5f;
+    [SerializeField] private float crouchHeight = 0.9f;
 
     [Header("Air settings")]
     [SerializeField] private float airAcceleration = 1f;
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour {
     public bool CanUncrouch {get; private set;}
     public bool IsLaddered {get; private set;}
 
-    private float controllerHeight = 2f;
+    private float standHeight = 2f;
     private float ladderLookModifier = 1f;
 
     /* Memory data */
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour {
     /* Initialize vars */
     private void Start() {
         controller = transform.GetComponent<CharacterController>();
+        standHeight = controller.height;
         velocity = Vector3.zero;
         head = transform.Find("Head");
     }
@@ -169,16 +171,20 @@ public class PlayerController : MonoBehaviour {
         }
         // Crouching
         if (EntityManager.LocalPlayer.Player_Input.crouched) {
-            controllerHeight = Mathf.Lerp(controller.height, 1, crouchSpeed * Time.deltaTime);
-            controller.height = controllerHeight;
+            controller.height = Mathf.Lerp(controller.height, crouchHeight, crouchSpeed * Time.deltaTime);
+            if (DUtil.Approx(controller.height, standHeight, 0.01f)) {
+                controller.height = crouchHeight;
+            }
         }
         // Uncrouching
         else if (CanUncrouch) {
-            controllerHeight = Mathf.Lerp(controller.height, 2, crouchSpeed * Time.deltaTime);
-            controller.height = controllerHeight;
+            controller.height = Mathf.Lerp(controller.height, standHeight, crouchSpeed * Time.deltaTime);
             // Smoothing.. maybe rework
-            if (controllerHeight < 1.9f) {
-                controller.Move(Vector3.up * controllerHeight * Time.deltaTime);
+            if (DUtil.Approx(controller.height, standHeight, 0.01f)) {
+                controller.height = standHeight;
+            }
+            else {
+                controller.Move(Vector3.up * controller.height * Time.deltaTime);
             }
         }
     }
@@ -193,7 +199,7 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
 
         // Hullu
-        float cMod = Mathf.Abs(2-controllerHeight) * 0.5f;
+        float cMod = Mathf.Abs(standHeight-controller.height) * 0.5f;
         
         Vector3 radius = new Vector3(0,controller.radius,0);
         Vector3 upperPos = transform.position + Vector3.up * (controller.height + cMod) - radius;
