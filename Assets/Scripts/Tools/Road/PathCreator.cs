@@ -21,9 +21,11 @@ public class PathCreator : MonoBehaviour {
     }
 
     private void OnDrawGizmosSelected() {
+        List<Path.Point> points = new List<Path.Point>();
+        path.GetAllPoints(path.StartPoint, ref points);
         if (drawEvaluationPath) {
             Gizmos.color = evaluationPathColor;
-            foreach(Path.Point p in path.GetAllPoints(path.StartPoint)) {
+            foreach(Path.Point p in points) {
                 if (p.bezierPoints != null && p.bezierPoints.Count > 0) {
                     foreach (Vector3[] v in p.bezierPoints) {
                         for (int i = 0; i < v.Length-1; i++) {

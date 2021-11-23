@@ -18,9 +18,9 @@ public class Path {
         activePoint = p2;
     }
 
-    public List<Point> GetAllPoints(Point start) {
+    /*public List<Point> GetAllPoints(Point start) {
         List<Point> points = new List<Point>();
-        if (start == null) {
+        if (start == null || points.Contains(start)) {
             return points;
         }
         points.Add(start);
@@ -28,10 +28,22 @@ public class Path {
             points.AddRange(GetAllPoints(p));
         }
         return points;
+    }*/
+
+    public void GetAllPoints(Point start, ref List<Point> points) {
+        if (start == null || points.Contains(start)) {
+            return;
+        }
+        points.Add(start);
+        foreach(Point p in start.next) {
+            GetAllPoints(p, ref points);
+        }
     }
 
     public void GetAllEvalPoints(ref List<Vector2> list) {
-        foreach(Path.Point p in GetAllPoints(StartPoint)) {
+        List<Point> points = new List<Point>();
+        GetAllPoints(StartPoint, ref points);
+        foreach(Path.Point p in points) {
             if (p.bezierPoints != null && p.bezierPoints.Count > 0) {
                 foreach (Vector3[] v in p.bezierPoints) {
                     for (int i = 0; i < v.Length-1; i++) {
@@ -49,9 +61,8 @@ public class Path {
     }
 
     public void Connect(Point p1, Point p2) {
-        return;/*
         p1.next.Add(p2);
-        p2.prev.Add(p1);*/
+        p2.prev.Add(p1);
     }
 
     public void RemovePoint(Point p) {

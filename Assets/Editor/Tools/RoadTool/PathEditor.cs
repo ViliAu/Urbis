@@ -32,7 +32,7 @@ public class PathEditor : Editor {
             }
             Undo.RecordObject(creator, "Add Point");
             path.AddPoint(mousePos);
-            points = path.GetAllPoints(path.StartPoint);
+            RefreshPathPoints();
         }
         // Making a node active
         else if (guiEvent.type == EventType.MouseDown && guiEvent.button == 0/* && guiEvent.control*/) {
@@ -54,19 +54,19 @@ public class PathEditor : Editor {
                 if (dst < minDistance) {
                     Undo.RecordObject(creator, "Delete Point");
                     path.RemovePoint(p);
-                    points = path.GetAllPoints(path.StartPoint);
+                    RefreshPathPoints();
                     break;
                 }
             }
         }
         if (guiEvent.type == EventType.KeyDown && guiEvent.keyCode == KeyCode.B) {
             path.ActivePoint.bezier = !path.ActivePoint.bezier;
-            points = path.GetAllPoints(path.StartPoint);
+            RefreshPathPoints();
         }
         if (guiEvent.type == EventType.KeyDown && guiEvent.keyCode == KeyCode.Backspace) {
             Undo.RecordObject(creator, "Delete Point");
             path.RemovePoint(path.ActivePoint);
-            points = path.GetAllPoints(path.StartPoint);
+            RefreshPathPoints();
         }
         // Override mouse default
         HandleUtility.AddDefaultControl(0);
@@ -125,12 +125,17 @@ public class PathEditor : Editor {
         }
     }
 
+    private void RefreshPathPoints() {
+        points.Clear();
+        path.GetAllPoints(path.StartPoint, ref points);
+    }
+
     private void OnEnable() {
         creator = (PathCreator)target;
         if (creator.path == null) {
             creator.CreatePath();
         }
         path = creator.path;
-        points = path.GetAllPoints(path.StartPoint);
+        RefreshPathPoints();
     }
 }
