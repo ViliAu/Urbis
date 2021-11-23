@@ -30,10 +30,28 @@ public class Path {
         return points;
     }
 
+    public void GetAllEvalPoints(ref List<Vector2> list) {
+        foreach(Path.Point p in GetAllPoints(StartPoint)) {
+            if (p.bezierPoints != null && p.bezierPoints.Count > 0) {
+                foreach (Vector3[] v in p.bezierPoints) {
+                    for (int i = 0; i < v.Length-1; i++) {
+                        list.Add(v[i]);
+                    }
+                }
+            }
+        }
+    }
+
     public void AddPoint(Vector3 pos) {
         Point p = new Point(activePoint, null, pos, (activePoint.controlPoint2 + pos)*0.5f);
         activePoint.next.Add(p);
         activePoint = p;
+    }
+
+    public void Connect(Point p1, Point p2) {
+        return;/*
+        p1.next.Add(p2);
+        p2.prev.Add(p1);*/
     }
 
     public void RemovePoint(Point p) {
@@ -59,46 +77,9 @@ public class Path {
         p = null;
     }
 
-    // TODO: Muuta rekursiiviseksi...
-    public Vector2[] CalculateEvenlySpacedPoints(float spacing, float resolution = 1) {
-        List<Vector2> evenlySpacedPoints = new List<Vector2>();
-        evenlySpacedPoints.Add(startPoint.position);
-        Vector2 previousPoint = evenlySpacedPoints[0];
-        float dstSinceLastEvenPoint = 0;
-        foreach (Point p in GetAllPoints(startPoint)) {
-            foreach (Point poi in p.next) {
-                if (p.bezier) {
-                    float controlNetWeight = Vector2.Distance(p.position, p.controlPoint1) + Vector2.Distance(p.controlPoint1, poi.position)
-                        + Vector2.Distance(poi.position, poi.controlPoint1); 
-                    float estimatedCurveLenght = Vector2.Distance(p.position,poi.position) + controlNetWeight * 0.5f;
-                    int divisions = Mathf.CeilToInt(estimatedCurveLenght * resolution * 10);
-                    float t = 0;
-                    while (t <= 1) {
-                        t += 1f/divisions;
-                        Vector2 pointOnCurve = Bezier.EvaluateCubic(p.position, p.controlPoint2, poi.controlPoint1, poi.position, t);
-                        dstSinceLastEvenPoint += Vector2.Distance(previousPoint, pointOnCurve);
-                        while (dstSinceLastEvenPoint >= spacing) {
-                            float overShootDst = dstSinceLastEvenPoint - spacing;
-                            Vector2 newEvenlySpacedPoint = pointOnCurve + (previousPoint-pointOnCurve).normalized * overShootDst;
-                            evenlySpacedPoints.Add(newEvenlySpacedPoint);
-                            dstSinceLastEvenPoint = overShootDst;
-                            previousPoint = newEvenlySpacedPoint;
-                        }
-                        previousPoint = pointOnCurve;
-                    }
-                }
-                // TODO: Linear line calc here
-                else {
-
-                }
-            }
-        }
-        return evenlySpacedPoints.ToArray();
-    }
-
     public EvaluationPoint[] CalculateMeshPointsRecursively(float spacing = 0.1f, float resolution = 1) {
         List<EvaluationPoint> evaluationPoints = new List<EvaluationPoint>();
-        //evaluationPoints.Add(new EvaluationPoint())
+        evaluationPoints.Add(new EvaluationPoint(startPoint.position));
         return null;
     }
 
@@ -106,6 +87,7 @@ public class Path {
         public Vector3 position, controlPoint1 = Vector3.zero, controlPoint2 = Vector3.zero;
         public List<Point> prev = new List<Point>();
         public List<Point> next = new List<Point>();
+        public List<Vector3[]> bezierPoints = new List<Vector3[]>();
         public bool bezier = true;
         public Point (Point prev, Point next, Vector3 pos, Vector3 control) {
             if (prev != null)
@@ -148,13 +130,16 @@ public class Path {
     public class EvaluationPoint {
         public Vector3 position;
         public List<EvaluationPoint> next;
+        public EvaluationPoint(Vector3 position) {
+            this.position = position;
+        }
         public EvaluationPoint(Vector3 position, EvaluationPoint next) {
             this.position = position;
             this.next.Add(next);
         }
         public EvaluationPoint(Vector3 position, List<EvaluationPoint> next) {
             this.position = position;
-
+            this.next.AddRange(next);
         }
     }
 }

@@ -4,21 +4,34 @@ using UnityEngine;
 
 public class PathCreator : MonoBehaviour {
 
-    [HideInInspector]
-    public Path path;
+    [HideInInspector] public Path path;
 
-    public bool drawEval = false;
+    [Range(3, 30)]public int segmentsPerLine = 10; 
+
+    public bool drawAbsolutePath = true;
+    public bool drawEvaluationPath = false;
+    public bool drawHandles = true;
+    public Color absolutePathColor = Color.green;
+    public Color evaluationPathColor = Color.white;
+    public Color bezierHandleColor = Color.red;
+    public Color activeHandleColor = Color.yellow;
 
     public void CreatePath() {
         path = new Path(transform.position);
     }
 
     private void OnDrawGizmosSelected() {
-        float spacing = 0.1f;
-        float resolution = 1;
-        Vector2[] p = path.CalculateEvenlySpacedPoints(spacing, resolution);
-        for(int i = 0; i < p.Length-1; i++) {
-            Gizmos.DrawLine(p[i], p[i+1]);
+        if (drawEvaluationPath) {
+            Gizmos.color = evaluationPathColor;
+            foreach(Path.Point p in path.GetAllPoints(path.StartPoint)) {
+                if (p.bezierPoints != null && p.bezierPoints.Count > 0) {
+                    foreach (Vector3[] v in p.bezierPoints) {
+                        for (int i = 0; i < v.Length-1; i++) {
+                            Gizmos.DrawLine(v[i], v[i+1]);
+                        }
+                    }
+                }
+            }
         }
     }
 }

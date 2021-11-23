@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(PathCreator))]
 public class RoadCreator : MonoBehaviour {
 
     [Range(.05f, 1.5f)]
@@ -10,10 +13,18 @@ public class RoadCreator : MonoBehaviour {
     public bool autoUpdate;
     public float tiling = 1;
 
-    public void UpdateRoad()
-    {
+
+    public void UpdateRoad() {
         Path path = GetComponent<PathCreator>().path;
-        Vector2[] points = path.CalculateEvenlySpacedPoints(spacing);
+
+    }
+
+    /*
+    public void UpdateRoad() {
+        Path path = GetComponent<PathCreator>().path;
+        List<Vector2> pointsList = new List<Vector2>();
+        path.GetAllEvalPoints(ref pointsList);
+        Vector2[] points = pointsList.ToArray();
         GetComponent<MeshFilter>().mesh = CreateRoadMesh(points);
 
         int textureRepeat = Mathf.RoundToInt(tiling * points.Length * spacing * .05f);
@@ -73,5 +84,5 @@ public class RoadCreator : MonoBehaviour {
         mesh.uv = uvs;
 
         return mesh;
-    }
+    }*/
 }
