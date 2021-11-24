@@ -15,15 +15,16 @@ public class PlayerInput : MonoBehaviour {
     [HideInInspector] public bool leftMouseDown = false;
     [HideInInspector] public bool rightMouseDown = false;
     [HideInInspector] public bool jumped = false;
+    [HideInInspector] public bool interacted = false;
+    [HideInInspector] public bool dropped = false;
     [HideInInspector] public bool threw = false;
     [HideInInspector] public bool reload = false;
-    [HideInInspector] public bool interacted = false;
+    [HideInInspector] public bool tabbed = false;
+
     [HideInInspector] public bool crouched = false;
-    [HideInInspector] public bool dropped = false;
     [HideInInspector] public bool zoom = false;
     [HideInInspector] public bool sprinting = false;
     [HideInInspector] public bool magnet = false;
-
 
     private void Update() {
         GetInput();
@@ -38,6 +39,7 @@ public class PlayerInput : MonoBehaviour {
         dropped = Input.GetKeyDown(KeyCode.G);
         threw = Input.GetKeyDown(KeyCode.Mouse1);
         reload = Input.GetKeyDown(KeyCode.R);
+        tabbed = Input.GetKeyDown(KeyCode.Tab);
 
         leftMouseDown = Input.GetKey(KeyCode.Mouse0);
         rightMouseDown = Input.GetKey(KeyCode.Mouse1);

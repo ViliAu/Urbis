@@ -44,7 +44,7 @@ public static class Database {
     }
 
     public static void LoadIcons() {
-        Sprite[] iconList = Resources.LoadAll<Sprite>("Textures/UI/Crosshair");
+        Sprite[] iconList = Resources.LoadAll<Sprite>("Textures/UI/Icons");
         icons = new Dictionary<string, Sprite>();
         int counter = 0;
         for (int i = 0; i < iconList.Length; i++) {

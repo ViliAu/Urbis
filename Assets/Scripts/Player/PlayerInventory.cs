@@ -6,15 +6,13 @@ using Mirror;
 public class PlayerInventory : Inventory {
 
     private void Update() {
-        
+        CheckInput();    
     }
 
-    public override void AddItem(Item item) {
-        
-    }
-
-    private void DropItem() {
-
+    private void CheckInput() {
+        if (EntityManager.LocalPlayer.Player_Input.tabbed) {
+            ToggleUI();
+        }
     }
 
 }

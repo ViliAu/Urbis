@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: -2596822072398487880}
   - component: {fileID: -2515757168230821850}
   - component: {fileID: -1333553136553221641}
+  - component: {fileID: -4562180953797203506}
   - component: {fileID: 2463072093310667530}
   - component: {fileID: 2463072093310667525}
   - component: {fileID: 2929497812841812613}
@@ -351,11 +352,12 @@ MonoBehaviour:
   leftMouseDown: 0
   rightMouseDown: 0
   jumped: 0
+  interacted: 0
+  dropped: 0
   threw: 0
   reload: 0
-  interacted: 0
+  tabbed: 0
   crouched: 0
-  dropped: 0
   zoom: 0
   sprinting: 0
   magnet: 0
@@ -373,9 +375,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  entityName: changeme
-  maxItemCount: 10
-  itemList: []
+  entityName: player_inventory
+  maxItemCount: 9
+  items: []
+  uiPrefab: {fileID: 7502577474966555958, guid: e1a30af5027449349bb4f077c5a6692f, type: 3}
 --- !u!114 &-1333553136553221641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +403,19 @@ MonoBehaviour:
   - {fileID: 2463072093908019644}
   - {fileID: 777740244}
   selfObjectToDisable: []
+--- !u!114 &-4562180953797203506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2463072093310667528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b680c8c01abe4541a24eb3805774801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 777740245}
 --- !u!143 &2463072093310667530
 CharacterController:
   m_ObjectHideFlags: 0
