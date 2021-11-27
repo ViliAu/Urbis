@@ -66,6 +66,16 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private PlayerWallet pwallet;
+    public PlayerWallet Player_Wallet {
+        get {
+            if (pwallet == null) {
+                pwallet = transform.GetComponent<PlayerWallet>();
+            }
+            return pwallet;
+        }
+    }
+
     void Start() {
         MoveToSpawnPosition();
     }

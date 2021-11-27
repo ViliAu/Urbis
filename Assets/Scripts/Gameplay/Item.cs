@@ -5,6 +5,14 @@ using Mirror;
 
 public class Item : Interactable {
     
+    [SerializeField] private float price = 1;
+
+    public float Price {
+        get {
+            return price;
+        }
+    }
+
     [Server]
     public override void OnServerInteract(NetworkIdentity client) {
         PlayerInventory inv = client.transform.GetComponent<PlayerInventory>();

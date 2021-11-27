@@ -363,15 +363,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 917144383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92664b310e5928e4cb474acedced4dba, type: 3}
+  m_Script: {fileID: 11500000, guid: a4c72ae1c21a9c4408fba5bacdc192c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  entityName: roskis
-  dropTable: {fileID: 11400000, guid: d82def56f3bdf4c4db45452b2eaceae6, type: 2}
-  resetTimeRange: {x: 0, y: 10}
-  highlightMat: {fileID: 2100000, guid: 37fcc97a74cd42548a187f36dc2b4941, type: 2}
+  entityName: sellis
+  returnModifier: 0.5
 --- !u!1 &1447049410
 GameObject:
   m_ObjectHideFlags: 0
