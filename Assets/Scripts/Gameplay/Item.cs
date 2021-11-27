@@ -5,15 +5,12 @@ using Mirror;
 
 public class Item : Interactable {
     
-    [ClientRpc]
-    protected override void RcpInteractionFinish(NetworkIdentity client) {
-        // Add the object to the player's inventory
+    [Server]
+    public override void OnServerInteract(NetworkIdentity client) {
         PlayerInventory inv = client.transform.GetComponent<PlayerInventory>();
-        if (inv.AddItem(this)) {
-            // Hide the object from everyone
-            gameObject.SetActive(false);
-        }
-
+        bool success = inv.AddItem(client, this);
+        RpcSetEntityActive(gameObject, !success);
+        RpcInteractionFinish(client);
     }
     
 }

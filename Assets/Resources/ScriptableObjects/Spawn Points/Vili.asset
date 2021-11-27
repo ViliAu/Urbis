@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a53bce63b395184680dd4595fc16f0b, type: 3}
   m_Name: Vili
   m_EditorClassIdentifier: 
-  playerSpawnPos: {x: -8.0036, y: 0, z: -5.421795}
+  playerSpawnPos: {x: -8.935762, y: 0, z: -5.026528}
   sceneName: Vili

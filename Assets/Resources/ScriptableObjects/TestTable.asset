@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: TestTable
   m_EditorClassIdentifier: 
   prefabs:
-  - prefabToDrop: {fileID: 0}
-    weight: 0
-    absoluteChance: "ep\xE4luku%"
-  - prefabToDrop: {fileID: 0}
-    weight: 0
-    absoluteChance: "ep\xE4luku%"
-  - prefabToDrop: {fileID: 0}
-    weight: 0
-    absoluteChance: "ep\xE4luku%"
+  - prefabToDrop: {fileID: 3365835349688585353, guid: 16f48f338fe02154580e90663818616f, type: 3}
+    weight: 3
+    absoluteChance: 30.00%
+  - prefabToDrop: {fileID: 7585773547054984631, guid: f08002cec0ae3ba4faf3f1c893be060a, type: 3}
+    weight: 3
+    absoluteChance: 30.00%
+  - prefabToDrop: {fileID: 1948111262427552297, guid: 01f4c29b47abc534eac258afe1748800, type: 3}
+    weight: 3
+    absoluteChance: 30.00%
+  - prefabToDrop: {fileID: 2972201109984649260, guid: f3a300afd1f163c47a1779a7887f6b7f, type: 3}
+    weight: 1
+    absoluteChance: 10.00%

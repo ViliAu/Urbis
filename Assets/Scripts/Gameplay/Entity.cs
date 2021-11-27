@@ -13,4 +13,9 @@ public class Entity : NetworkBehaviour {
         return t.ToTitleCase(entityName).Replace('_', ' ');
     }
 
+    [ClientRpc]
+    public virtual void RpcSetEntityActive(GameObject go, bool isActive) {
+        go.SetActive(isActive);
+    }
+
 }

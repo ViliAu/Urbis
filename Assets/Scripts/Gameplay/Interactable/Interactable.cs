@@ -7,11 +7,11 @@ public class Interactable : Entity {
 
     [Server]
     public virtual void OnServerInteract(NetworkIdentity client) {
-        RcpInteractionFinish(client);
+        
     }
 
     [ClientRpc]
-    protected virtual void RcpInteractionFinish(NetworkIdentity client) {
+    protected virtual void RpcInteractionFinish(NetworkIdentity client) {
         
-    } 
+    }
 }

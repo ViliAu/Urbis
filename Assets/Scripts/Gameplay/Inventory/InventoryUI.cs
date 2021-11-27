@@ -24,7 +24,6 @@ public class InventoryUI : MonoBehaviour {
     public void SetupInventoryUI(Inventory inv) {
         uiPanel  = transform.GetComponent<RectTransform>();
         uiPanel.anchoredPosition = Vector3.zero;
-        //transform.position = new Vector2(Screen.width / 2, Screen.height / 2) + spawnOffset;
         inventory = inv;
         SpawnInventorySlots();
     }
@@ -42,6 +41,7 @@ public class InventoryUI : MonoBehaviour {
 
         for (int i = 0; i < inventory.Items.Length; i++) {
             InventorySlot clone = Instantiate<InventorySlot>(slotPrefab, Vector3.zero, Quaternion.identity, slotParent);
+            clone.SetupSlot(inventory);
 
             // Calculate slot position in grid
             int currentColumn = Mathf.FloorToInt(i % (columns));
@@ -68,10 +68,17 @@ public class InventoryUI : MonoBehaviour {
                 + gridGaps.y * Mathf.CeilToInt((rows - 1) / 2)
                 + (rows % 2 == 0 ? gridGaps.y / 2 : 0));
         }
+        UpdateUI();
+    }
+    
+    public void UpdateUI(int index, Item item) {
+        slots[index].SetItem(item);
     }
 
-    private void UpdateUI() {
-        Debug.Log("A");
+    public void UpdateUI() {
+        for (int i = 0; i < inventory.Items.Length; i++) {
+            slots[i].SetItem(inventory.Items[i]);
+        }
     }
 
 }
