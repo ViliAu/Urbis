@@ -18,12 +18,13 @@ public class SellPoint : Interactable {
                 inv.RemoveItem(client, inv.Items[i]);
             }
         }
-        //EntityManager.LocalPlayer.Player_Wallet.
+        EntityManager.LocalPlayer.Player_Wallet.AddMoney(totalMoney);
+        RpcPlayFX();
     }
 
     [ClientRpc]
-    public void RpcUpdateMoneyAmount(float amount) {
-        //EntityManager.LocalPlayer.Player_Wallet.
+    public void RpcPlayFX() {
+        SoundSystem.PlaySound("ui_transaction", transform.position);
     }
 
 }
