@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a53bce63b395184680dd4595fc16f0b, type: 3}
   m_Name: Kristo
   m_EditorClassIdentifier: 
-  playerSpawnPos: {x: -35.634785, y: -3.057014e-16, z: 13.767567}
+  playerSpawnPos: {x: 1.1101483, y: -2.0894879e-16, z: 9.410216}
   sceneName: Kristo
