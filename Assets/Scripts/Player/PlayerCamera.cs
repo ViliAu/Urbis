@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour {
     public Transform head = null;
     public bool locked = false;
+    public Camera cam;
     private Vector2 camEuler = default;
-    private Camera cam;
 
     private void Awake() {
         cam = Camera.main;

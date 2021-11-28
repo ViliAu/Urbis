@@ -15,7 +15,7 @@ public static class Database {
         audioClips = new Dictionary<string, AudioClip>();
         int counter = 0;
         for (int i = 0; i < clips.Length; i++)  {
-            audioClips.Add(clips[i].name, clips[i]);
+            audioClips.Add(clips[i].name.ToLower(), clips[i]);
             counter++;
         }
         //Debug.Log("Succesfully assigned: " + counter + " audio files.");
@@ -26,7 +26,7 @@ public static class Database {
         entities = new Dictionary<string, Entity>();
         int counter = 0;
         for (int i = 0; i < ents.Length; i++)  {
-            entities.Add(ents[i].entityName, ents[i]);
+            entities.Add(ents[i].entityName.ToLower(), ents[i]);
             counter++;
         }
         //Debug.Log("Succesfully assigned: " + counter + " entities.");
@@ -37,7 +37,7 @@ public static class Database {
         crosshairs = new Dictionary<string, Sprite>();
         int counter = 0;
         for (int i = 0; i < crhs.Length; i++) {
-            crosshairs.Add(crhs[i].name, crhs[i]);
+            crosshairs.Add(crhs[i].name.ToLower(), crhs[i]);
             counter++;
         }
         //Debug.Log("Succesfully assigned: " + counter + " entities.");
@@ -48,7 +48,7 @@ public static class Database {
         icons = new Dictionary<string, Sprite>();
         int counter = 0;
         for (int i = 0; i < iconList.Length; i++) {
-            icons.Add(iconList[i].name, iconList[i]);
+            icons.Add(iconList[i].name.ToLower(), iconList[i]);
             counter++;
         }
         //Debug.Log("Succesfully assigned: " + counter + " entities.");
@@ -63,7 +63,7 @@ public static class Database {
             LoadAudioClips();
         }
         AudioClip clip;
-        audioClips.TryGetValue(soundName, out clip);
+        audioClips.TryGetValue(soundName.ToLower(), out clip);
         return clip;
     }
 
@@ -71,7 +71,7 @@ public static class Database {
         if (entities == null) {
             LoadEntities();
         }
-        entities.TryGetValue(entityName, out Entity entity);
+        entities.TryGetValue(entityName.ToLower(), out Entity entity);
         return entity;
     }
 
@@ -79,7 +79,7 @@ public static class Database {
         if (crosshairs == null) {
             LoadCrosshairs();
         }
-        crosshairs.TryGetValue(crosshairName, out Sprite sprite);
+        crosshairs.TryGetValue(crosshairName.ToLower(), out Sprite sprite);
         return sprite;
     }
 
@@ -87,7 +87,7 @@ public static class Database {
         if (icons == null) {
             LoadIcons();
         }
-        icons.TryGetValue(iconName, out Sprite sprite);
+        icons.TryGetValue(iconName.ToLower(), out Sprite sprite);
         return sprite;
     }
 

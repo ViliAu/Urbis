@@ -4,47 +4,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class Trashcan : Interactable {
+public class Trashbag : Interactable {
 
     [SerializeField] private DropTable dropTable = null;
-    [SerializeField] private Vector2 resetTimeRange = Vector2.up * 10;
+    [SerializeField][Range(1, 10)] private int minDropAmount = 1, maxDropAmount= 5;
     [SerializeField] private Material highlightMat = null;
-
-    [SyncVar]
-    private bool canLoot = true;
 
     [SerializeField] private List<Material[]> ogMats = new List<Material[]>();
     [SerializeField] private List<Material[]> newMats = new List<Material[]>();
 
     [Server]
     public override void OnServerInteract(NetworkIdentity client) {
-        if (!canLoot) {
-            return;
-        }
-        canLoot = false;
         base.OnServerInteract(client);
-        GameObject g = Instantiate(dropTable.RollDrop(), transform.position + transform.up, Quaternion.identity);
-        Item item = g.GetComponent<Item>();
-        if (item == null) {
-            Debug.LogError("Item "+g.name+" doesn't have item class");
-            return;
-        }
-        NetworkServer.Spawn(g);
         PlayerInventory inv = client.transform.GetComponent<PlayerInventory>();
-        bool success = inv.AddItem(client, item);
-        if (success) {
-            RpcSetEntityActive(g, false);
+        int dropAmount = UnityEngine.Random.Range(minDropAmount, maxDropAmount+1);
+        for (int i = 0; i < dropAmount; i++) {
+            GameObject g = Instantiate(dropTable.RollDrop(), transform.position + transform.up, Quaternion.identity);
+            Item item = g.GetComponent<Item>();
+            if (item == null) {
+                Debug.LogError("Item "+g.name+" doesn't have item class");
+                return;
+            }
+            NetworkServer.Spawn(g);
+            bool success = inv.AddItem(client, item);
+            if (success) {
+                RpcSetEntityActive(g, false);
+            }
+            else {
+                RpcThrowItem(g);
+            }
         }
-        else {
-            RpcThrowItem(g);
-        }
-        Invoke("ResetInteract", UnityEngine.Random.Range(resetTimeRange.x, resetTimeRange.y));
         RpcInteractionFinish(client);
-    }
-
-    [Server]
-    private void ResetInteract() {
-        canLoot = true;
     }
 
     [ClientRpc]
@@ -54,13 +44,19 @@ public class Trashcan : Interactable {
 
     [ClientRpc]
     protected override void RpcInteractionFinish(NetworkIdentity client) {
-        SoundSystem.PlaySound("interact_dumpster", transform.position);
-        SetHighLight(false);
+        SoundSystem.PlaySound("interact_trashbag", transform.position);
+        CmdDestroyObject();
+    }
+
+    // TODO: Add authority
+    [Command (requiresAuthority = false)]
+    private void CmdDestroyObject() {
+        NetworkServer.Destroy(gameObject);
     }
 
     public override void PlayerFocusEnter() {
         base.PlayerFocusEnter();
-        SetHighLight(canLoot);
+        SetHighLight(true);
     }
 
     public override void PlayerFocusExit() {

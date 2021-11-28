@@ -9,7 +9,6 @@ public class PlayerInteraction : NetworkBehaviour {
     public LayerMask interactionMask = default;
     public Rigidbody interactRig;
 
-    private Camera cam;
     private RaycastHit hit;
 
     public Interactable interactable {get; private set;}
@@ -38,13 +37,15 @@ public class PlayerInteraction : NetworkBehaviour {
                 }
 
                 // If the interactable thing is same as ours
-                else if (intera == interactable) {
-                    if (EntityManager.LocalPlayer.Player_Input.interacted)
-                        CmdInteraction();
+                else if (intera.gameObject.GetInstanceID() == interactable.gameObject.GetInstanceID()) {
+                    if (EntityManager.LocalPlayer.Player_Input.interacted) {
+                        CmdInteraction(transform.GetComponent<NetworkIdentity>(), interactable.GetComponent<NetworkIdentity>());
+                    }
+                        
                 }
 
                 // If we lose focus and are focusing on a new interactable
-                else if (intera != interactable) {
+                else if (intera.gameObject.GetInstanceID() != interactable.gameObject.GetInstanceID()) {
                     interactable.PlayerFocusExit();
                     interactable = intera;
                     interactable.PlayerFocusEnter();
@@ -86,9 +87,10 @@ public class PlayerInteraction : NetworkBehaviour {
     }*/
 
     [Command]
-    private void CmdInteraction() {
-        //Interactable intera = interactedObject.GetComponent<Interactable>();
-        interactable.OnServerInteract(transform.GetComponent<NetworkIdentity>());
+    private void CmdInteraction(NetworkIdentity client, NetworkIdentity interactedObject) {
+        Interactable intera = interactedObject.GetComponent<Interactable>();
+        if (intera != null)
+            intera.OnServerInteract(client);
     }
 
 }

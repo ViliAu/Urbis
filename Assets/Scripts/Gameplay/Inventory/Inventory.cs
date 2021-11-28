@@ -80,24 +80,26 @@ public class Inventory : NetworkBehaviour {
     [Server]
     public virtual void RemoveItem(NetworkIdentity client, Item item) {
         Inventory inv = client.GetComponent<Inventory>();
-        Debug.Log("INVIN LENTTI "+inv.Items.Length);
         for (int i = 0; i < inv.Items.Length; i++) {
             if (inv.Items[i] == item) {
                 inv.Items[i] = null;
-                RcpRemoveItem(client, item, i);
+                RpcRemoveItem(client, item, i);
+                return;
             }
         }
     }
 
     [ClientRpc]
-    protected virtual void RcpRemoveItem(NetworkIdentity client, Item item, int index) {
-        Inventory inv = client.GetComponent<Inventory>();
-        if (index > inv.Items.Length)
+    protected virtual void RpcRemoveItem(NetworkIdentity client, Item item, int index) {
+        if (!client.isLocalPlayer) {
             return;
-        if (client.isLocalPlayer) {
-            inv.items[index] = null;
-            inv.UpdateUI();
         }
+        // ????????????????????????
+        if (index % 256 == 0)
+            index /= 256;
+        Inventory inv = client.GetComponent<Inventory>();
+        inv.items[index] = null;
+        inv.UpdateUI();
     }
 
     // Wrapper functions for the ui

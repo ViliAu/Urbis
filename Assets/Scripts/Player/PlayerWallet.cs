@@ -13,7 +13,7 @@ public class PlayerWallet : NetworkBehaviour {
     }
 
     private void UpdateUI(float oldVal, float newVal) {
-        EntityManager.LocalPlayer.Player_UI.UpdateMoneyAmount(newVal-oldVal);
+        EntityManager.LocalPlayer.Player_UI.UpdateMoneyAmount(newVal);
     }
 
 }

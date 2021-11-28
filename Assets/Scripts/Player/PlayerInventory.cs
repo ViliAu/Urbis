@@ -20,8 +20,8 @@ public class PlayerInventory : Inventory {
     }
 
     [ClientRpc]
-    protected override void RcpRemoveItem(NetworkIdentity client, Item item, int index) {
-        base.RcpRemoveItem(client, item, index);
+    protected override void RpcRemoveItem(NetworkIdentity client, Item item, int index) {
+        base.RpcRemoveItem(client, item, index);
         if (item != null) {
             item.transform.position = transform.position + transform.forward + transform.up;
             item.gameObject.SetActive(true);

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c690550bf25550f44855d423e143a048, type: 3}
+  m_Name: TrashSpawnerTable
+  m_EditorClassIdentifier: 
+  prefabs:
+  - prefabToDrop: {fileID: 3365835349688585353, guid: 16f48f338fe02154580e90663818616f, type: 3}
+    weight: 5
+    absoluteChance: 35.71%
+  - prefabToDrop: {fileID: 2972201109984649260, guid: f3a300afd1f163c47a1779a7887f6b7f, type: 3}
+    weight: 3
+    absoluteChance: 21.43%
+  - prefabToDrop: {fileID: 1948111262427552297, guid: 01f4c29b47abc534eac258afe1748800, type: 3}
+    weight: 5
+    absoluteChance: 35.71%
+  - prefabToDrop: {fileID: 625211149344068962, guid: a59f9dca56136d34aacfb989bdd40ac5, type: 3}
+    weight: 1
+    absoluteChance: 7.14%

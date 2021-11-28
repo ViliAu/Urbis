@@ -14,20 +14,21 @@ public class SellPoint : Interactable {
         float totalMoney = 0;
         for (int i = 0; i < inv.Items.Length; i++) {
             if (inv.Items[i] != null) {
-                Item item = inv.Items[i];
+                GameObject g = inv.Items[i].gameObject;
                 totalMoney += inv.Items[i].Price * returnModifier;
-                Debug.Log(i);
-                NetworkServer.Destroy(item.gameObject);
-                inv.RemoveItem(client, item);
+                inv.RemoveItem(client, inv.Items[i]);
+                NetworkServer.Destroy(g);
             }
         }
-        EntityManager.LocalPlayer.Player_Wallet.AddMoney(totalMoney);
-        RpcPlayFX();
+        if (totalMoney > 0) {
+            EntityManager.LocalPlayer.Player_Wallet.AddMoney(totalMoney);
+            RpcPlayFX();
+        }
     }
 
     [ClientRpc]
     public void RpcPlayFX() {
-        SoundSystem.PlaySound("ui_transaction", transform.position);
+        SoundSystem.PlaySound("transaction_complete", transform.position);
     }
 
 }
