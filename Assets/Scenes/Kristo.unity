@@ -24531,7 +24531,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
-  fastPlay: 1
+  fastPlay: 0
 --- !u!1001 &1536176020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36161,6 +36161,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1314406969632478446, guid: 1d4cc5143607b164c98c0a6067906027, type: 3}
+      propertyPath: sceneId
+      value: 2201165818
+      objectReference: {fileID: 0}
     - target: {fileID: 7939716088361376178, guid: 1d4cc5143607b164c98c0a6067906027, type: 3}
       propertyPath: m_Name
       value: Mushroom
