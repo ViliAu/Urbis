@@ -2063,13 +2063,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  dropTable: {fileID: 0}
-  bounds: {x: 100, y: 100}
-  center: {x: 0, y: 0}
+  dropTable: {fileID: 11400000, guid: af2525b53cac843459545ca950c031a5, type: 2}
+  bounds: {x: 39.38, y: 55.18}
+  center: {x: 0, y: -6.4}
   minHeight: -10
   maxHeight: 10
-  minTime: 10
-  maxTime: 30
+  minTime: 0.3
+  maxTime: 2
   drawBounds: 1
 --- !u!114 &94903607
 MonoBehaviour:
@@ -24531,7 +24531,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
-  fastPlay: 1
+  fastPlay: 0
 --- !u!1001 &1536176020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36161,6 +36161,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1314406969632478446, guid: 1d4cc5143607b164c98c0a6067906027, type: 3}
+      propertyPath: sceneId
+      value: 860367717
+      objectReference: {fileID: 0}
     - target: {fileID: 7939716088361376178, guid: 1d4cc5143607b164c98c0a6067906027, type: 3}
       propertyPath: m_Name
       value: Mushroom
