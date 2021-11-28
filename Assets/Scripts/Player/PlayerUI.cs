@@ -8,7 +8,6 @@ public class PlayerUI : MonoBehaviour {
     
     public RectTransform canvas = null;
     [SerializeField] private TMP_Text moneyText = null;
-    [SerializeField] private TextMeshProUGUI moneyTextasd = null;
 
     public void UpdateMoneyAmount(float amount) {
         if (moneyText == null) {
@@ -16,6 +15,10 @@ public class PlayerUI : MonoBehaviour {
             return;
         }
         moneyText.text = amount.ToString()+'$';
+    }
+
+    public void SetMoneyTextVisibility(bool visible) {
+        moneyText.gameObject.SetActive(visible);
     }
     
 }

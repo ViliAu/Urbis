@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 public class Interactable : Entity {
-
+    
     [Server]
     public virtual void OnServerInteract(NetworkIdentity client) {
         
@@ -13,5 +13,14 @@ public class Interactable : Entity {
     [ClientRpc]
     protected virtual void RpcInteractionFinish(NetworkIdentity client) {
         
+    }
+
+    // Local methods
+    public virtual void PlayerFocusEnter() {
+
+    }
+
+    public virtual void PlayerFocusExit() {
+
     }
 }
