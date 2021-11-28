@@ -81,8 +81,14 @@ public class Inventory : NetworkBehaviour {
         return false;
     }
 
+    // Request from client to remove an item
+    [Command]
+    public virtual void RemoveItemClient(Item item) {
+        RemoveItem(transform.GetComponent<NetworkIdentity>(), item);
+    }
+
     /// <summary>
-    /// Adds an item to the given index if possible and disables it
+    /// 
     /// </summary>
     /// <param name="item">Item to add</param>
     /// <param name="index">Index in which the item is added</param>
@@ -98,11 +104,6 @@ public class Inventory : NetworkBehaviour {
         }
     }
 
-    [Command]
-    public virtual void RemoveItemClient(Item item) {
-        RemoveItem(transform.GetComponent<NetworkIdentity>(), item);
-    }
-
     [ClientRpc]
     private void RcpRemoveItem(NetworkIdentity client, Item item, int index) {
         Inventory inv = client.GetComponent<Inventory>();
@@ -113,16 +114,6 @@ public class Inventory : NetworkBehaviour {
         item.transform.position = transform.position + transform.forward + transform.up;
         item.gameObject.SetActive(true);
         item.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up)*client.GetComponent<PlayerInventory>().dropForce, ForceMode.Impulse);
-    }
-
-    /// <summary>
-    /// Adds an item to the given index if possible and disables it
-    /// </summary>
-    /// <param name="item">Item to add</param>
-    /// <param name="index">Index in which the item is added</param>
-    /// <returns>Return true or false depending on if the item got added to the inventory</returns>
-    public virtual void RemoveItem(int index) {
-
     }
 
     // Wrapper functions for the ui

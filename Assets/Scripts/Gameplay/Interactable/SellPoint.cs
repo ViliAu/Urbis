@@ -14,8 +14,10 @@ public class SellPoint : Interactable {
         float totalMoney = 0;
         for (int i = 0; i < inv.Items.Length; i++) {
             if (inv.Items[i] != null) {
+                Item item = inv.Items[i];
                 totalMoney += inv.Items[i].Price * returnModifier;
-                inv.RemoveItem(client, inv.Items[i]);
+                NetworkServer.Destroy(item.gameObject);
+                inv.RemoveItem(client, item);
             }
         }
         EntityManager.LocalPlayer.Player_Wallet.AddMoney(totalMoney);
