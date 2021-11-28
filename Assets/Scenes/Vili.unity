@@ -158,10 +158,10 @@ MonoBehaviour:
   dropTable: {fileID: 11400000, guid: 035ac073af55028468b79851abdf400d, type: 2}
   bounds: {x: 53.05, y: 54.6}
   center: {x: 0, y: 0}
-  minHeight: 0
+  minHeight: -10
   maxHeight: 10
   minTime: 0.2
-  maxTime: 2
+  maxTime: 1
   drawBounds: 1
 --- !u!114 &517524381
 MonoBehaviour:
