@@ -16,6 +16,7 @@ public class SellPoint : Interactable {
             if (inv.Items[i] != null) {
                 Item item = inv.Items[i];
                 totalMoney += inv.Items[i].Price * returnModifier;
+                Debug.Log(i);
                 NetworkServer.Destroy(item.gameObject);
                 inv.RemoveItem(client, item);
             }

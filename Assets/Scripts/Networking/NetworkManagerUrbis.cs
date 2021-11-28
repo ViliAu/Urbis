@@ -39,8 +39,10 @@ public class NetworkManagerUrbis : NetworkManager {
 
     private void GetSpawnablePrefabs() {
         NetworkIdentity[] netID = Resources.LoadAll<NetworkIdentity>("Prefabs");
-        foreach(NetworkIdentity n in netID)
-            spawnPrefabs.Add(n.gameObject);
+        foreach(NetworkIdentity n in netID) {
+            if (n.gameObject.name != "Player")
+                spawnPrefabs.Add(n.gameObject);
+        }
     }
 
 }

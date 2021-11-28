@@ -9,29 +9,12 @@ public class Trashcan : Interactable {
     [SerializeField] private DropTable dropTable = null;
     [SerializeField] private Vector2 resetTimeRange = Vector2.up * 10;
     [SerializeField] private Material highlightMat = null;
+
+    [SyncVar]
     private bool canLoot = true;
 
     [SerializeField] private List<Material[]> ogMats = new List<Material[]>();
     [SerializeField] private List<Material[]> newMats = new List<Material[]>();
-
-    private void Awake() {
-        if (highlightMat != null) {
-            foreach(MeshRenderer m in transform.GetComponentsInChildren<MeshRenderer>()) {
-                ogMats.Add(m.materials);
-                Material[] mats = new Material[m.materials.Length+1];
-                m.materials.CopyTo(mats, 0);
-                mats[m.materials.Length] = highlightMat;
-                newMats.Add(mats);
-            }
-        }
-        //NetworkManagerUrbis.Instance.clientConnected += OnStartClient;
-    }
-
-    /*
-    private void ClientStart() {
-        RpcSetHighLight(canLoot);
-    }*/
-    
 
     [Server]
     public override void OnServerInteract(NetworkIdentity client) {
@@ -55,9 +38,16 @@ public class Trashcan : Interactable {
         else {
             RpcThrowItem(g);
         }
-        RpcSetHighLight(false);
+        //RpcSetHighLight(false);
+        SetHighLight(false);
         Invoke("ResetInteract", UnityEngine.Random.Range(resetTimeRange.x, resetTimeRange.y));
         RpcInteractionFinish(client);
+    }
+
+    [Server]
+    private void ResetInteract() {
+        canLoot = true;
+        //RpcSetHighLight(true);
     }
 
     [ClientRpc]
@@ -65,13 +55,12 @@ public class Trashcan : Interactable {
         g.GetComponent<Rigidbody>().AddForce(Vector3.up + transform.forward, ForceMode.Impulse);
     }
 
-    [Server]
-    private void ResetInteract() {
-        canLoot = true;
-        RpcSetHighLight(true);
+    [ClientRpc]
+    protected override void RpcInteractionFinish(NetworkIdentity client) {
+        SoundSystem.PlaySound("interact_trashcan", transform.position);
     }
 
-    [ClientRpc]
+    /*[ClientRpc]
     private void RpcSetHighLight(bool isHighLighted) {
         MeshRenderer[] rend = transform.GetComponentsInChildren<MeshRenderer>();
         if (rend == null || highlightMat == null) {
@@ -79,6 +68,37 @@ public class Trashcan : Interactable {
         }
         for (int i = 0; i < rend.Length; i++) {
             rend[i].materials = isHighLighted ? newMats[i] : ogMats[i];
+        }
+    }*/
+
+    public override void PlayerFocusEnter() {
+        base.PlayerFocusEnter();
+        SetHighLight(canLoot);
+    }
+
+    public override void PlayerFocusExit() {
+        base.PlayerFocusExit();
+        SetHighLight(false);
+    }
+
+    private void SetHighLight(bool highlighted) {
+        if (highlightMat == null)
+            return;
+        if (ogMats.Count == 0) {
+            foreach(MeshRenderer m in transform.GetComponentsInChildren<MeshRenderer>()) {
+                ogMats.Add(m.materials);
+                Material[] mats = new Material[m.materials.Length+1];
+                m.materials.CopyTo(mats, 0);
+                mats[m.materials.Length] = highlightMat;
+                newMats.Add(mats);
+            }
+        }
+        MeshRenderer[] rend = transform.GetComponentsInChildren<MeshRenderer>();
+        if (rend == null || highlightMat == null) {
+            return;
+        }
+        for (int i = 0; i < rend.Length; i++) {
+            rend[i].materials = highlighted ? newMats[i] : ogMats[i];
         }
     }
 

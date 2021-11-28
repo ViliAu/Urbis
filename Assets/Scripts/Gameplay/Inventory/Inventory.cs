@@ -9,27 +9,13 @@ public class Inventory : NetworkBehaviour {
     [SerializeField] private Item[] items = null;
     [SerializeField] private InventoryUI uiPrefab = null;
 
-    private InventoryUI ui = null;
+    protected InventoryUI ui = null;
 
     public Item[] Items {
         get {
             return items;
         }
     }
-
-    /*
-    private void Start() {
-        NetworkManagerUrbis.Instance.clientConnected += ClientStart;
-    }
-
-    private void ClientStart() {
-        items = new Item[maxItemCount];
-        if (uiPrefab != null) {
-            ui = Instantiate<InventoryUI>(uiPrefab, Vector3.zero, Quaternion.identity, EntityManager.LocalPlayer.Player_UI.canvas);
-            ui.SetupInventoryUI(this);
-            ui.gameObject.SetActive(false);
-        }
-    }*/
     
     public void Awake() {
         // TODO: Selvitä ja rework miks tulee null
@@ -88,14 +74,13 @@ public class Inventory : NetworkBehaviour {
     }
 
     /// <summary>
-    /// 
+    /// Removes an item from the inventory
     /// </summary>
-    /// <param name="item">Item to add</param>
-    /// <param name="index">Index in which the item is added</param>
-    /// <returns>Return true or false depending on if the item got added to the inventory</returns>
+    /// <param name="item">Item to remove</param>
     [Server]
     public virtual void RemoveItem(NetworkIdentity client, Item item) {
         Inventory inv = client.GetComponent<Inventory>();
+        Debug.Log("INVIN LENTTI "+inv.Items.Length);
         for (int i = 0; i < inv.Items.Length; i++) {
             if (inv.Items[i] == item) {
                 inv.Items[i] = null;
@@ -105,15 +90,14 @@ public class Inventory : NetworkBehaviour {
     }
 
     [ClientRpc]
-    private void RcpRemoveItem(NetworkIdentity client, Item item, int index) {
+    protected virtual void RcpRemoveItem(NetworkIdentity client, Item item, int index) {
         Inventory inv = client.GetComponent<Inventory>();
+        if (index > inv.Items.Length)
+            return;
         if (client.isLocalPlayer) {
             inv.items[index] = null;
             inv.UpdateUI();
         }
-        item.transform.position = transform.position + transform.forward + transform.up;
-        item.gameObject.SetActive(true);
-        item.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up)*client.GetComponent<PlayerInventory>().dropForce, ForceMode.Impulse);
     }
 
     // Wrapper functions for the ui

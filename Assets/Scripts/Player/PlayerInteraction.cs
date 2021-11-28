@@ -5,38 +5,90 @@ using Mirror;
 
 public class PlayerInteraction : NetworkBehaviour {
 
-    [SerializeField] private float range = 1.5f;
-    [SerializeField] private LayerMask hitMask = default;
+    public float range = 3f;
+    public LayerMask interactionMask = default;
+    public Rigidbody interactRig;
 
-    RaycastHit hit;
+    private Camera cam;
+    private RaycastHit hit;
+
+    public Interactable interactable {get; private set;}
+    public Vector3 interactionPoint {get; private set;}
+    public Ray ray {get; private set;}
 
     private void Update() {
-        CheckInput();
+        CastInteractRay();
     }
 
-    private void CheckInput() {
-        if (EntityManager.LocalPlayer.Player_Input.interacted) {
-            CastRay();
-        }
-    }
+    private void CastInteractRay() {
+        ray = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
+        if (Physics.Raycast(ray, out hit, range, interactionMask, QueryTriggerInteraction.Collide)) {
+            Interactable intera = null;
+            interactionPoint = hit.point;
+            // Get intera for interacting / focusing
+            if ((intera = hit.transform.GetComponent<Interactable>()) != null) {
+                /*if (intera.isGrabbable) {
+                    interactRig = intera.rig;
+                }*/
 
-    private void CastRay() {
-        // Check if we hit something
-        if (Physics.Raycast(EntityManager.LocalPlayer.Player_Camera.head.position, EntityManager.LocalPlayer.Player_Camera.head.forward, out hit, range, hitMask)) {
-            // Check if it was interactable
-            if (hit.transform.GetComponent<Interactable>()){
-                // Check if it has a network identity component 
-                if (hit.transform.GetComponent<NetworkIdentity>()) {
-                    CmdInteractionServer(transform.GetComponent<NetworkIdentity>(), hit.transform.GetComponent<NetworkIdentity>());
+                // If the interactable thing exists and we currently are not focusing on an interactable object
+                if (interactable == null) {
+                    interactable = intera;
+                    interactable.PlayerFocusEnter();
+                }
+
+                // If the interactable thing is same as ours
+                else if (intera == interactable) {
+                    if (EntityManager.LocalPlayer.Player_Input.interacted)
+                        CmdInteraction();
+                }
+
+                // If we lose focus and are focusing on a new interactable
+                else if (intera != interactable) {
+                    interactable.PlayerFocusExit();
+                    interactable = intera;
+                    interactable.PlayerFocusEnter();
                 }
             }
+            // We aren't focusing on anything interactable
+            else {
+                LoseFocus();
+            }
+        }
+        // We aren't hitting or focusing on anything
+        else {
+            LoseFocus();
         }
     }
+    
+    private void LoseFocus() {
+        /*EntityManager.LocalPlayer.Player_UI.SetCrosshairDarkness(0.75f);
+        EntityManager.LocalPlayer.Player_UI.SetCrosshair("crosshair_dot");
+        EntityManager.LocalPlayer.Player_UI.SetFocusText("");*/
+        if (interactable != null)
+            interactable.PlayerFocusExit();
+        interactable = null;
+        interactRig = null;
+    }
+
+    /// <summary>
+    /// Used for example when changing while looking at a food table
+    /// </summary>
+    public void UpdateFocus() {
+        if (interactable != null)
+            interactable.PlayerFocusEnter();
+    }
+
+    /*[Command]
+    private void CmdEnterFocus(NetworkIdentity client, NetworkIdentity interactedObject) {
+        Interactable intera = interactedObject.GetComponent<Interactable>();
+        intera.OnServerHighlight(client);
+    }*/
 
     [Command]
-    private void CmdInteractionServer(NetworkIdentity client, NetworkIdentity interactedObject) {
-        Interactable intera = interactedObject.GetComponent<Interactable>();
-        intera.OnServerInteract(client);
+    private void CmdInteraction() {
+        //Interactable intera = interactedObject.GetComponent<Interactable>();
+        interactable.OnServerInteract(transform.GetComponent<NetworkIdentity>());
     }
 
 }
