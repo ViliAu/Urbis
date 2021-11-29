@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2972201109984649259}
   - component: {fileID: 2972201109984649257}
   - component: {fileID: 7049975624281598614}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Koo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   entityName: koo_kola
+  price: 1
 --- !u!65 &2972201109984649256
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -138,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2972201110586107987}
   - component: {fileID: 2972201110586107981}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2972201111786556140}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,6 +276,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0be4b99865eea6343b82f0f3162886f6, type: 3}
       propertyPath: m_Name
       value: Koo
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0be4b99865eea6343b82f0f3162886f6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0be4b99865eea6343b82f0f3162886f6, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 356580077}
   - component: {fileID: 356580079}
   - component: {fileID: 356580078}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 777740248}
   - component: {fileID: 777740247}
   - component: {fileID: 777740246}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SS_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2463072091977260739}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 2463072093310667530}
   - component: {fileID: 2463072093310667525}
   - component: {fileID: 2929497812841812613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,6 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 2463072093908019647}
   locked: 0
+  cam: {fileID: 0}
 --- !u!114 &2463072093310667527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,7 +512,7 @@ GameObject:
   - component: {fileID: 2463072093326808563}
   - component: {fileID: 2463072093326808560}
   - component: {fileID: 2463072093326808461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -628,7 +629,7 @@ GameObject:
   - component: {fileID: 2463072093773720195}
   - component: {fileID: 2463072093773720220}
   - component: {fileID: 2463072093773720221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2463072093908019647}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,7 +878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7890449651319551758}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GunHold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
