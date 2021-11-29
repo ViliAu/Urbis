@@ -307,9 +307,9 @@ MonoBehaviour:
   maximumGravity: 120
   jumpHeight: 13
   ladderWidth: 0.1
-  climbSpeed: 1
-  ladderMaxAngle: 10
-  ladderJumpForce: 10
+  climbSpeed: 3
+  ladderMaxAngle: 30
+  ladderJumpForce: 3
   groundMask:
     serializedVersion: 2
     m_Bits: 2147483647

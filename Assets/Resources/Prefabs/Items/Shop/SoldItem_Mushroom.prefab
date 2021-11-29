@@ -81,7 +81,8 @@ MonoBehaviour:
   syncInterval: 0.1
   entityName: solditem_mushroom
   itemToSell: {fileID: 6503971455516147779, guid: 1d4cc5143607b164c98c0a6067906027, type: 3}
-  restockTime: 10
+  price: 5
+  restockTime: 30
 --- !u!1001 &8246027551264689545
 PrefabInstance:
   m_ObjectHideFlags: 0

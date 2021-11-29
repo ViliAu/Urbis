@@ -10,6 +10,7 @@ public class Mushroom : Item {
     [SerializeField] private float coneAngle = 60;
     [SerializeField] private float maxDistance = 3f;
     [SerializeField] private int maxSpawnTries = 3;
+    [SerializeField][Range(1,100)] private float stayAliveChance = 50f, reproductChance = 50f;
 
     private RaycastHit hit;
 
@@ -32,17 +33,22 @@ public class Mushroom : Item {
                     break;
             }
         }
-        if (found) {
+        if (found && Random.Range(0, 100) < reproductChance) {
             GameObject g = Instantiate(Database.GetEntity(entityName).gameObject, hit.point,
                 Quaternion.FromToRotation(Vector3.up, hit.normal));
             NetworkServer.Spawn(g);
-            RpcPlayFX(g);
+            g.GetComponent<Mushroom>().RpcPlayFX();
         }
-        Invoke("SpawnMushroom", Random.Range(minTime, maxTime));
+        if (Random.Range(0, 100) < stayAliveChance) {
+            Invoke("SpawnMushroom", Random.Range(minTime, maxTime));
+        }
+        else {
+            NetworkServer.Destroy(gameObject);
+        }
     }
 
     [ClientRpc]
-    public void RpcPlayFX(GameObject g) {
+    public void RpcPlayFX() {
         SoundSystem.PlaySound("mushroom_grow", transform.position);
     }
     

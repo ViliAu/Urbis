@@ -26,6 +26,10 @@ public static class Database {
         entities = new Dictionary<string, Entity>();
         int counter = 0;
         for (int i = 0; i < ents.Length; i++)  {
+            if (ents[i].entityName == "changeme") {
+                Debug.LogWarning("Entity "+ents[i].gameObject.name+" hs no entityname. It will not get added to the database.");
+                continue;
+            }
             entities.Add(ents[i].entityName.ToLower(), ents[i]);
             counter++;
         }

@@ -5,15 +5,17 @@ using Mirror;
 
 public class SoldItem : Interactable {
     [SerializeField] private Item itemToSell = null;
+    [SerializeField] private float price = 5f;
     [SerializeField] private float restockTime = 30f;
     
     [Server]
     public override void OnServerInteract(NetworkIdentity client) {
         base.OnServerInteract(client);
         PlayerInventory inv = client.GetComponent<PlayerInventory>();
-        if (EntityManager.LocalPlayer.Player_Wallet.Balance < itemToSell.Price) {
+        if (EntityManager.LocalPlayer.Player_Wallet.Balance < price) {
             return;
         }
+        EntityManager.LocalPlayer.Player_Wallet.AddMoney(-price);
         GameObject g = Instantiate(itemToSell.gameObject, transform.position, Quaternion.identity);
         NetworkServer.Spawn(g);
         bool success = inv.AddItem(client, g.GetComponent<Item>());
@@ -35,7 +37,8 @@ public class SoldItem : Interactable {
 
     [ClientRpc]
     private void RpcThrowItem(GameObject g) {
-        g.GetComponent<Rigidbody>().AddForce(Vector3.up + transform.forward, ForceMode.Impulse);
+        if (g.GetComponent<Rigidbody>() != null)
+            g.GetComponent<Rigidbody>().AddForce(Vector3.up + transform.forward, ForceMode.Impulse);
     }
 
     [ClientRpc]

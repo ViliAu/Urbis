@@ -68,12 +68,14 @@ MonoBehaviour:
   syncInterval: 0.1
   entityName: mushroom
   price: 0.2
-  minTime: 5
-  maxTime: 15
+  minTime: 10
+  maxTime: 30
   rayOffset: {x: 0, y: 0.4, z: 0}
   coneAngle: 90
   maxDistance: 3
-  maxSpawnTries: 3
+  maxSpawnTries: 50
+  stayAliveChance: 90
+  reproductChance: 13
 --- !u!65 &1943835882
 BoxCollider:
   m_ObjectHideFlags: 0
