@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7939716088361376178
+--- !u!1 &8246027551073974916
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7939716088361376179}
-  - component: {fileID: 1314406969632478446}
-  - component: {fileID: 6503971455516147779}
-  - component: {fileID: 1943835882}
+  - component: {fileID: 8246027551073974917}
+  - component: {fileID: 1044265316460214232}
+  - component: {fileID: 2035714895701243868}
+  - component: {fileID: 4467502129583628829}
   m_Layer: 3
-  m_Name: Mushroom
+  m_Name: SoldItem_Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7939716088361376179
+--- !u!4 &8246027551073974917
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939716088361376178}
+  m_GameObject: {fileID: 8246027551073974916}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.397, y: 0, z: -16.352}
+  m_LocalPosition: {x: -8.819, y: 0.966, z: -3.615}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7612544389858511188}
+  - {fileID: 8495336061068257890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1314406969632478446
+--- !u!114 &1044265316460214232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939716088361376178}
+  m_GameObject: {fileID: 8246027551073974916}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
@@ -50,49 +50,44 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 1d4cc5143607b164c98c0a6067906027
+  m_AssetId: dd9e6282e74c7144ba2e65dd2a2ffcf2
   hasSpawned: 0
---- !u!114 &6503971455516147779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939716088361376178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c03eeb56f8452fd408962d94ed9092e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  entityName: mushroom
-  price: 0.2
-  minTime: 5
-  maxTime: 15
-  rayOffset: {x: 0, y: 0.4, z: 0}
-  coneAngle: 90
-  maxDistance: 3
-  maxSpawnTries: 3
---- !u!65 &1943835882
+--- !u!65 &2035714895701243868
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939716088361376178}
+  m_GameObject: {fileID: 8246027551073974916}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.23273277, y: 0.3492148, z: 0.23779678}
   m_Center: {x: 0.036717415, y: 0.17345834, z: -0.0012660027}
---- !u!1001 &7939716088707002047
+--- !u!114 &4467502129583628829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8246027551073974916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7bf06d5a06891f43bf59755fb5a14e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  entityName: solditem_mushroom
+  itemToSell: {fileID: 6503971455516147779, guid: 1d4cc5143607b164c98c0a6067906027, type: 3}
+  restockTime: 10
+--- !u!1001 &8246027551264689545
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7939716088361376179}
+    m_TransformParent: {fileID: 8246027551073974917}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a3cb0961c6568c5419333971bb7d1097, type: 3}
       propertyPath: m_RootOrder
@@ -152,8 +147,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3cb0961c6568c5419333971bb7d1097, type: 3}
---- !u!4 &7612544389858511188 stripped
+--- !u!4 &8495336061068257890 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a3cb0961c6568c5419333971bb7d1097, type: 3}
-  m_PrefabInstance: {fileID: 7939716088707002047}
+  m_PrefabInstance: {fileID: 8246027551264689545}
   m_PrefabAsset: {fileID: 0}

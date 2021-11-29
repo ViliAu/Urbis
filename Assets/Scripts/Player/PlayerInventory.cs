@@ -23,9 +23,14 @@ public class PlayerInventory : Inventory {
     protected override void RpcRemoveItem(NetworkIdentity client, Item item, int index) {
         base.RpcRemoveItem(client, item, index);
         if (item != null) {
-            item.transform.position = transform.position + transform.forward + transform.up;
             item.gameObject.SetActive(true);
-            item.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up)*client.GetComponent<PlayerInventory>().dropForce, ForceMode.Impulse);
+            item.transform.position = transform.position + transform.forward;
+            Rigidbody rig = item.GetComponent<Rigidbody>();
+            if (rig != null) {
+                item.transform.position += Vector3.up;
+                item.GetComponent<Rigidbody>().AddForce((transform.forward + transform.up)*client.GetComponent<PlayerInventory>().dropForce, ForceMode.Impulse);
+            }
+                
         }
     }
 

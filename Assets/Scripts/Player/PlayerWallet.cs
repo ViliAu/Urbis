@@ -8,6 +8,12 @@ public class PlayerWallet : NetworkBehaviour {
     [SyncVar (hook=nameof(UpdateUI))]
     [SerializeField] private float balance = 0f;
 
+    public float Balance {
+        get {
+            return balance;
+        }
+    }
+
     public void AddMoney(float amount) {
         balance += amount;
     }

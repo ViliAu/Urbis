@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1948111261955199574}
   - component: {fileID: 1948111261955199560}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 1948111262427552302}
   - component: {fileID: 1948111262427552300}
   - component: {fileID: 6044110581377601683}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Milk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   entityName: milk_1
+  price: 1
 --- !u!65 &1948111262427552301
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1948111263154942185}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,6 +260,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4fb21c69dab5e294b9e6bab6aeb1b13d, type: 3}
       propertyPath: m_Name
       value: Milk-carton
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4fb21c69dab5e294b9e6bab6aeb1b13d, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fb21c69dab5e294b9e6bab6aeb1b13d, type: 3}
